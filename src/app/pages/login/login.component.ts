@@ -36,7 +36,8 @@ export class LoginComponent {
   loginUser(){
    this.loginService.login(this.dadosForm["email"].value, this.dadosForm["senha"].value).subscribe(
     token => {
-      alert(token)
+      alert(token);
+      this.router.navigate(['/dashboard']);
     },
     err =>{
       alert('Ocorreu um erro')
