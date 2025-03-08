@@ -23,7 +23,7 @@
                 <label> Sistemas </label>
                <!-- <ng-select class="select-padrao" [items]="listSistemas"  bindlabel="name" [multiple]="false" [clearable]="false" [searchable]="false" formControlName="sistemaSelect"></ng-select> -->
 
-               <ng-select class="select-padrao" formControlName="sistemaSelect" [items]="listSistemas" bindLabel="name" [clearable]="false" [multiple]="false" [searchable]="false">
+               <ng-select class="select-padrao" [(ngModel)]="sistemaSelect" formControlName="sistemaSelect" [items]="listSistemas" bindLabel="name" [clearable]="false" [multiple]="false" [searchable]="false">
               </ng-select>
                
             </div>            

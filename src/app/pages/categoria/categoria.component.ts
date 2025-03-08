@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Categoria } from 'src/app/models/categoria';
 import { SelectModel } from 'src/app/models/selectModel';
 import { SistemaFinanceiro } from 'src/app/models/sistemaFinanceiro';
 import { AuthService } from 'src/app/services/auth.services';
+import { CategoriaService } from 'src/app/services/categoria.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { SistemaService } from 'src/app/services/sistema.service';
 
@@ -16,19 +18,13 @@ export class CategoriaComponent {
     public menuService: MenuService,
     public formBuilder: FormBuilder,
     public sistemaService: SistemaService,
-    public authService: AuthService
+    public authService: AuthService,
+    public categoriaService: CategoriaService
   ) {}
 
   listSistemas = new Array<SelectModel>();
   sistemaSelect =  new SelectModel();
 
-
-selectedOption: any;
-  options = [
-    { name: 'Opção 1', id: 1 },
-    { name: 'Opção 2', id: 2 },
-    { name: 'Opção 3', id: 3 }
-  ];
 
   categoriaForm: FormGroup;
 
@@ -48,9 +44,23 @@ selectedOption: any;
   }
 
   enviar() {
-    debugger;
-
     var dados = this.dadosForm();
+
+    let item = new Categoria();
+    item.nome = dados["name"].value;
+    item.id = 0;
+    item.idSistema = parseInt(this.sistemaSelect.id);
+
+
+
+    this.categoriaService.AdicionarCategoria(item).subscribe((response: Categoria) =>{
+      
+      this.categoriaForm.reset();
+
+    }), (error) => console.error(error), () => {}
+
+
+
   }
 
   ListSistemasUsuario() {
