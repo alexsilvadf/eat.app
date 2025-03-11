@@ -65,7 +65,7 @@ export class CategoriaComponent {
 
   ListSistemasUsuario() {
     this.sistemaService
-      .ListSistemasUsuario(this.authService.getEmailUser())
+      .ListSistemasUsuario(this.authService.getEmailUser)
       .subscribe((response: Array<SistemaFinanceiro>) => {
         
         var listSistemaFinanceiro = [];

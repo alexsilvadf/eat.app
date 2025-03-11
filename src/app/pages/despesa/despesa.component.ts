@@ -79,7 +79,7 @@ export class DespesaComponent {
 
   ListarCategoriaUsuario() {
     this.categoriaService
-      .ListarCategoriasUsuario(this.authService.getEmailUser())
+      .ListarCategoriasUsuario(this.authService.getEmailUser)
       .subscribe((response: Array<Categoria>) => {
         var listaCategorias = [];
 
