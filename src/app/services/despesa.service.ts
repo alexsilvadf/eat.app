@@ -20,6 +20,10 @@ export class DespesaService {
     );
   }
 
+  ListarDespesaUsuario(emailUsuario: string) {
+    return this.httpClient.get(`${this.baseUrl}/ListarDespesaUsuario?emailUsuario=${emailUsuario}`);
+  }
+
 
 
 

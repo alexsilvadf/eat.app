@@ -121,6 +121,8 @@ ListarCategoriasUsuario(){
       
       this.categoriaForm.reset();
 
+      this.ListarCategoriasUsuario();
+
     }), (error) => console.error(error), () => {}
 
 

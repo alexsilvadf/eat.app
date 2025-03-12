@@ -118,9 +118,11 @@ ListaSistemaUsuario(){
       
       this.sistemaForm.reset();
 
+     
+
       this.sistemaService.CadastrarUsuarioSistema(response.id, this.authService.getEmailUser).subscribe((response: any) =>{
 
-
+        this.ListaSistemaUsuario();
 
       }), (error) => console.error(error), () => {}
 

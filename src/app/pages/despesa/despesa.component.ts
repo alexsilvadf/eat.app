@@ -16,6 +16,65 @@ import { SistemaService } from 'src/app/services/sistema.service';
   styleUrls: ['./despesa.component.scss'],
 })
 export class DespesaComponent {
+
+  tipoTela: number = 1;//listagem, 2 Cadastro, 3 edição
+  tableListDespesas: Array<Despesa>
+  id: string;
+  
+  page: number = 1;
+  config: any;
+  paginacao: boolean = true;
+  itemsPorPagina: number = 10;
+  
+  configpag() {
+    this.id = this.gerarIdParaConfigDePaginacao();
+  
+    this.config = {
+      id: this.id,
+      currentPage: this.page,
+      itemsPerPage: this.itemsPorPagina
+  
+    };
+  }
+  
+  gerarIdParaConfigDePaginacao() {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < 10; i++) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
+  }
+  
+  cadastro(){
+    this.tipoTela = 2;
+  
+    this.despesaForm.reset();
+  }
+  
+  mudarItemsPorPage() {
+    this.page = 1
+    this.config.currentPage = this.page;
+    this.config.itemsPerPage = this.itemsPorPagina;
+  }
+  
+  mudarPage(event: any) {
+    this.page = event;
+    this.config.currentPage = this.page;
+  }
+  
+  listarDespesaUsuario(){
+    this.tipoTela = 1;
+  
+    this.despesaService.ListarDespesaUsuario(this.authService.getEmailUser).subscribe((response: Array<Despesa>) =>{
+        
+    this.tableListDespesas = response;
+   
+    }), (error) => console.error(error), () => {}
+  
+  }
   constructor(
     public menuService: MenuService,
     public formBuilder: FormBuilder,
@@ -40,6 +99,11 @@ export class DespesaComponent {
   ngOnInit() {
     this.menuService.menuSelecionado = 4;
 
+    this.configpag();
+    this.listarDespesaUsuario();
+
+ 
+
     this.despesaForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       valor: ['', [Validators.required]],
@@ -56,13 +120,10 @@ export class DespesaComponent {
   }
 
   enviar() {
-    debugger;
-
     var dados = this.dadosForm();
 
     let item = new Despesa();
     item.nome = dados['name'].value;
-    item.id = 0;
     item.valor = dados['valor'].value;
     item.pago = this.checked;
     item.dataVencimento = dados['data'].value;
@@ -72,6 +133,7 @@ export class DespesaComponent {
       .AdicionarDespesa(item)
       .subscribe((response: Despesa) => {
         this.despesaForm.reset();
+        this.listarDespesaUsuario();
       }),
       (error) => console.error(error),
       () => {};
