@@ -62,7 +62,7 @@
 
           <td>{{item.id}}</td>
           <td>{{item.nome}}</td>
-          <td>Edit</td>
+          <td (click)="edicao(item.id)">Edit</td>
 
           </tr>
         </tbody>
@@ -83,8 +83,6 @@
             </pagination-controls>
         </div>
     </div>
-
-
     </div>
   </div>
 </div>

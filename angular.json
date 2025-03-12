@@ -31,7 +31,7 @@
             ],
             "styles": [
               "src/styles.scss",
-               "node_modules/ngx-spinner/animations/square-jelly-box.css"
+               "node_modules/ngx-spinner/animations/ball-scale-multiple.css"
             ],
             "scripts": []
           },
@@ -94,8 +94,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/ngx-spinner/animations/square-jelly-box.css"
+              "src/styles.scss",              
+              "node_modules/ngx-spinner/animations/ball-scale-multiple.css"
             ],
             "scripts": []
           }
@@ -107,3 +107,5 @@
     "analytics": "a40d711f-6dce-4cb3-8941-c2d39c90074b"
   }
 }
+
+
