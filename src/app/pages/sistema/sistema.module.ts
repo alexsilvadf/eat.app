@@ -7,7 +7,7 @@ import { SistemaComponent } from "./sistema.component";
 import { SistemaRoutingModule } from "./sistema-routing.module";
 import { NgxPaginationModule } from "ngx-pagination";
 import { NgSelectModule } from "@ng-select/ng-select";
-import { MatIconModule} from '@angular/material/icon'
+import { MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
