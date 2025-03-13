@@ -110,12 +110,27 @@ ListarCategoriasUsuario(){
   enviar() {
     var dados = this.dadosForm();
 
+    if(this.itemEdicao){
+
+      this.itemEdicao.nome = dados["name"].value;
+      this.itemEdicao.idSistema = parseInt(this.sistemaSelect.id);
+      this.itemEdicao.NomePropriedade = '';
+      this.itemEdicao.mensagem = '';
+      this.itemEdicao.notificacoes = [];
+  
+      this.categoriaService.AtualizarCategoria(this.itemEdicao).subscribe((response: Categoria) =>{
+        
+        this.categoriaForm.reset();
+  
+        this.ListarCategoriasUsuario();
+  
+      }), (error) => console.error(error), () => {}
+    }else{
+
     let item = new Categoria();
     item.nome = dados["name"].value;
     item.id = 0;
     item.idSistema = parseInt(this.sistemaSelect.id);
-
-
 
     this.categoriaService.AdicionarCategoria(item).subscribe((response: Categoria) =>{
       
@@ -125,11 +140,11 @@ ListarCategoriasUsuario(){
 
     }), (error) => console.error(error), () => {}
 
-
+  }
 
   }
 
-  ListSistemasUsuario() {
+  ListSistemasUsuario(id: number=null) {
     this.sistemaService
       .ListSistemasUsuario(this.authService.getEmailUser)
       .subscribe((response: Array<SistemaFinanceiro>) => {
@@ -141,8 +156,11 @@ ListarCategoriasUsuario(){
          
           item.id = x.id.toString();
           item.name = x.nome;
-
           listSistemaFinanceiro.push(item);
+
+          if(id && id == x.id){
+            this.sistemaSelect = item;
+          }
 
         });
 
@@ -152,5 +170,27 @@ ListarCategoriasUsuario(){
        
       }
     )
+  }
+
+  itemEdicao: Categoria;
+
+  edicao(id: number) {
+    this.categoriaService.ObterCategoria(id).subscribe(
+      (response: Categoria) => {
+        if (response) {
+          this.itemEdicao = response;
+          this.tipoTela = 2;
+
+          var sistema = response;
+
+          var dados = this.dadosForm();
+          dados['name'].setValue(this.itemEdicao.nome);
+
+          this.ListSistemasUsuario(response.idSistema);
+        }
+      },
+      (error) => console.log(error),
+      () => {}
+    );
   }
 }
